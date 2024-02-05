@@ -6,12 +6,26 @@ part of 'riverpod.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getProfileListHash() => r'd08609f32fbb474851e4d198d11c904063001e82';
+String _$getListHash() => r'd888b289e60374ae073dd638c5e3213ad5ab5004';
+
+/// See also [getList].
+@ProviderFor(getList)
+final getListProvider = AutoDisposeFutureProvider<List<Person>>.internal(
+  getList,
+  name: r'getListProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$getListHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef GetListRef = AutoDisposeFutureProviderRef<List<Person>>;
+String _$getProfileListHash() => r'927ecf9c52c33dc39c496e35bd7194cff53322fd';
 
 /// See also [getProfileList].
 @ProviderFor(getProfileList)
 final getProfileListProvider =
-    NotifierProvider<getProfileList, List<Person>>.internal(
+    AutoDisposeAsyncNotifierProvider<getProfileList, List<Person>>.internal(
   getProfileList.new,
   name: r'getProfileListProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,8 +35,23 @@ final getProfileListProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$getProfileList = Notifier<List<Person>>;
-String _$get1stFormInfoHash() => r'c8cff096b7af8adc7be6d369677ac931ffb0bdeb';
+typedef _$getProfileList = AutoDisposeAsyncNotifier<List<Person>>;
+String _$todoListHash() => r'f96c1a083a01fb4af232a63f7edb1332c1175571';
+
+/// See also [TodoList].
+@ProviderFor(TodoList)
+final todoListProvider =
+    AutoDisposeAsyncNotifierProvider<TodoList, List<Person>>.internal(
+  TodoList.new,
+  name: r'todoListProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$todoListHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$TodoList = AutoDisposeAsyncNotifier<List<Person>>;
+String _$get1stFormInfoHash() => r'ec8f8ce79d55328f71158d5de1875bf80effeed3';
 
 /// See also [Get1stFormInfo].
 @ProviderFor(Get1stFormInfo)
@@ -38,7 +67,7 @@ final get1stFormInfoProvider =
 );
 
 typedef _$Get1stFormInfo = Notifier<Map<String, dynamic>>;
-String _$get2ndFormInfoHash() => r'3b3a3a58d1de0456010514fdd67a3fcb67bb25a5';
+String _$get2ndFormInfoHash() => r'6b1780995e0288c19b0674d7dfaef24b28ee6019';
 
 /// See also [Get2ndFormInfo].
 @ProviderFor(Get2ndFormInfo)

@@ -291,9 +291,10 @@ class _FormSecondPageState extends ConsumerState<FormSecondPage> {
                           ref //Set the Provider the state
                               .read(get2ndFormInfoProvider.notifier)
                               .setInfo(formKey.currentState!.value);
-                          ref
-                              .read(getProfileListProvider.notifier)
-                              .addPersons();
+                          // ref
+                          //     .read(getProfileListProvider.notifier)
+                          //     .addPersons()
+
                           widget.nextPage();
                         } else {
                           formKey.currentState!.validate();
@@ -321,28 +322,39 @@ class _FormSecondPageState extends ConsumerState<FormSecondPage> {
   }
 }
 
-class FinishedPage extends StatefulWidget {
+class FinishedPage extends ConsumerStatefulWidget {
   const FinishedPage({super.key});
 
   @override
-  State<FinishedPage> createState() => _FinishedPageState();
+  ConsumerState<FinishedPage> createState() => _FinishedPageState();
 }
 
-class _FinishedPageState extends State<FinishedPage> {
+class _FinishedPageState extends ConsumerState<FinishedPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-          child: Column(
-        children: [
-          Text("Added"),
-          ElevatedButton(
-              onPressed: () {
-                GoRouter.of(context).goNamed('home');
-              },
-              child: Text("Go back"))
-        ],
-      )),
+    return FutureBuilder(
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          return Text("ERROR");
+        } else {
+          return Center(
+              child: Column(
+            children: [
+              Text("Added"),
+              ElevatedButton(
+                  onPressed: () {
+                    GoRouter.of(context).goNamed('home');
+                  },
+                  child: Text("Go back"))
+            ],
+          ));
+        }
+      },
+      future: ref.read(getProfileListProvider.notifier).addPersons(),
     );
   }
 }

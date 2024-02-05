@@ -13,4 +13,14 @@ class Person {
       required this.occupation,
       required this.height,
       required this.weight});
+
+  factory Person.fromJson(Map<String, dynamic> map) {
+    return Person(
+        name: map['name'],
+        age: map['age'],
+        gender: map['gender'],
+        occupation: map['occupation'],
+        height: map['height'],
+        weight: map['weight']);
+  }
 }

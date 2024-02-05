@@ -96,27 +96,35 @@ class _ProfileListState extends ConsumerState<ProfileList> {
   Widget build(BuildContext context) {
     final list = ref.watch(getProfileListProvider);
     print("building list");
-    return SizedBox(
-        width: MediaQuery.of(context).size.width * 0.5,
-        height: MediaQuery.of(context).size.height * 0.3,
-        child: SearchableList<Person>(
-          initialList: list,
-          builder: (list, index, item) {
-            return PersonItem(item: item);
-          },
-          emptyWidget: const Text("Empty"),
-          inputDecoration: InputDecoration(
-            labelText: "Search Persons",
-            fillColor: Colors.white,
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: Colors.blue,
-                width: 1.0,
-              ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
-        ));
+
+    return list.when(
+        data: (value) {
+          return SizedBox(
+              width: MediaQuery.of(context).size.width * 0.5,
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: SearchableList<Person>(
+                initialList: value,
+                builder: (list, index, item) {
+                  return PersonItem(item: item);
+                },
+                emptyWidget: const Text("Empty"),
+                inputDecoration: InputDecoration(
+                  labelText: "Search Persons",
+                  fillColor: Colors.white,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.blue,
+                      width: 1.0,
+                    ),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ));
+        },
+        error: (error, stacktrace) {
+          return Text(stacktrace.toString());
+        },
+        loading: () => CircularProgressIndicator());
   }
 }
 
